@@ -1,0 +1,32 @@
+site_name: pyHeat1D
+repo_url: https://github.com/HenriqueCCdA/pyHeat1D
+repo_name: pyheat1d
+edit_uri: tree/main/docs
+
+theme:
+  name: material
+  language: pt-BR
+
+# markdown_extensions:
+#   - admonition
+#   - pymdownx.superfences:
+#   - pymdownx.highlight:
+#       # anchor_linenums: true
+#       linenums: true
+#   - pymdownx.emoji:
+#       emoji_index: !!python/name:materialx.emoji.twemoji
+#       emoji_generator: !!python/name:materialx.emoji.to_svg
+
+
+watch:
+  - src/pyheat1d
+
+plugins:
+  - macros:
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src/pyheat1d]
+
+extra:
+  version_pytheat1d: 0.1.0

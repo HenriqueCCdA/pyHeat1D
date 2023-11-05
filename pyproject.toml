@@ -18,6 +18,15 @@ taskipy = "^1.12.0"
 black = "^23.10.1"
 ruff = "^0.1.3"
 mypy = "^1.6.1"
+pre-commit = "^3.5.0"
+
+
+[tool.poetry.group.doc.dependencies]
+mkdocs-macros-plugin = "^1.0.5"
+mkdocs = "^1.5.3"
+mkdocstrings = "^0.23.0"
+mkdocstrings-python = "^1.7.3"
+mkdocs-material = "^9.4.7"
 
 [build-system]
 requires = ["poetry-core"]
@@ -74,3 +83,5 @@ lin_mypy = {cmd="mypy --package tests --package pyheat1d", help="Analisador esta
 lin_ruff = {cmd="poetry run ruff check {src_module} tests", help="Linter com o Ruff.", use_vars = true}
 linter = {cmd="task lin_mypy && task lin_ruff", help="Linter"}
 test = {cmd="poetry run pytest", help="Rodando os testes"}
+
+doc = {cmd="poetry run mkdocs serve", help="Subindo o servidor de Documentação."}
