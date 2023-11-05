@@ -36,7 +36,6 @@ Para configura o pre-commmit pela a primeira fez:
 pre-commit install
 ```
 
-
 ## Gerando a documentação
 
 Para a documenntação foi utilizado o `mkdocs`. Para subir o servidor local da documentação:
