@@ -77,7 +77,7 @@ def test_centroid(grid):
     grid._mk_points()
     grid._mk_centroid()
 
-    centroid = grid.centroid
+    centroid = grid.centroids
 
     assert len(centroid) == 10
 
@@ -98,8 +98,8 @@ def test_grid(grid):
     assert (grid.cells[0][0], grid.cells[0][1]) == (1, 2)
     assert (grid.cells[1][0], grid.cells[1][1]) == (2, 3)
 
-    assert grid.centroid[0] == 0.25
-    assert grid.centroid[1] == 0.75
+    assert grid.centroids[0] == 0.25
+    assert grid.centroids[1] == 0.75
 
 
 def test_grid_infos(grid):
