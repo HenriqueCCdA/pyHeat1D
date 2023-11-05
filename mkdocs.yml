@@ -7,15 +7,12 @@ theme:
   name: material
   language: pt-BR
 
-# markdown_extensions:
-#   - admonition
-#   - pymdownx.superfences:
-#   - pymdownx.highlight:
+markdown_extensions:
+   - admonition
+   - pymdownx.superfences:
+   - pymdownx.highlight:
 #       # anchor_linenums: true
-#       linenums: true
-#   - pymdownx.emoji:
-#       emoji_index: !!python/name:materialx.emoji.twemoji
-#       emoji_generator: !!python/name:materialx.emoji.to_svg
+       linenums: true
 
 
 watch:

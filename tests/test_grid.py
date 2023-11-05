@@ -1,5 +1,5 @@
 import pytest
-from pyheat1d.grid import Mesh
+from pyheat1d.grid import BoundaryCondition, MatProps, Mesh
 
 
 @pytest.fixture
@@ -109,3 +109,19 @@ def test_grid_infos(grid):
         "n_cells": 10,
         "length": 1.0,
     }
+
+
+def test_positeve_boundary_condition():
+    bc = BoundaryCondition(type=3, params={"value": 20, "h": 1.0})
+
+    assert bc.type == 3
+    assert bc.params["value"] == 20
+    assert bc.params["h"] == 1.0
+
+
+def test_positeve_matprops():
+    bc = MatProps(k=1.0, ro=2.0, cp=2.1)
+
+    assert bc.k == 1.0
+    assert bc.ro == 2.0
+    assert bc.cp == 2.1
