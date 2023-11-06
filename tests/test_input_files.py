@@ -12,7 +12,7 @@ from pyheat1d.input_files import (
     load_input_file,
     validated,
 )
-from pyheat1d.mesh import BoundaryCondition, MatProps
+from pyheat1d.mesh import BoundaryCondition, MatPropsRef
 
 INPUT = Input(
     length=50.0,
@@ -22,7 +22,7 @@ INPUT = Input(
     lbc=BoundaryCondition(type=1, params={"value": 10.0}),
     rbc=BoundaryCondition(type=3, params={"value": 30.0, "h": 1.0}),
     initialt=20.0,
-    prop=MatProps(k=1.0, ro=2.0, cp=3.0),
+    prop=MatPropsRef(k=1.0, ro=2.0, cp=3.0),
 )
 
 DICT_INPUT = {
