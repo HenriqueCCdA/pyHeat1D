@@ -4,7 +4,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from pyheat1d.mesh import BoundaryCondition, MatProps
+from pyheat1d.mesh import BoundaryCondition, MatProps, MatPropsRef
 
 
 class InputFileNotFoundError(Exception):
@@ -44,7 +44,7 @@ class Input:
     lbc: BoundaryCondition
     rbc: BoundaryCondition
     initialt: float
-    prop: MatProps
+    prop: MatPropsRef
 
 
 def load_input_file(path: Path) -> Input:
@@ -71,7 +71,7 @@ def load_input_file(path: Path) -> Input:
 
     lbc = BoundaryCondition(**dict_.pop("lbc"))
     rbc = BoundaryCondition(**dict_.pop("rbc"))
-    prop = MatProps(**dict_.pop("prop"))
+    prop = MatPropsRef(**dict_.pop("prop"))
 
     in_ = Input(
         **dict_,

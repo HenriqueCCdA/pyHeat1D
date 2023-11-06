@@ -3,11 +3,6 @@ import pytest
 from pyheat1d.mesh import BoundaryCondition, MatProps, Mesh
 
 
-@pytest.fixture
-def mesh():
-    return Mesh(1.0, 10)
-
-
 @pytest.mark.unitary
 def test_init(mesh):
     # cells
@@ -20,6 +15,14 @@ def test_init(mesh):
 
     # nodes
     assert mesh.nodes.x.shape == (11,)
+
+    # BC
+    assert mesh.lbc.type == 1
+    assert mesh.lbc.params == {"value": 10.0}
+
+    # BC
+    assert mesh.rbc.type == 3
+    assert mesh.rbc.params == {"value": 30.0, "h": 1.0}
 
 
 @pytest.mark.unitary
@@ -102,7 +105,12 @@ def test_centroid(mesh):
 
 @pytest.mark.unitary
 def test_grid(mesh):
-    mesh = Mesh(1.0, 2)
+    mesh = Mesh(
+        1.0,
+        2,
+        lbc=BoundaryCondition(type=1, params={"value": 10.0}),
+        rbc=BoundaryCondition(type=1, params={"value": 10.0}),
+    )
 
     mesh.mk_grid()
 

@@ -30,19 +30,35 @@ class BoundaryCondition:
 
 
 @dataclass
+class MatPropsRef:
+    """
+    Propriedades do material.
+
+    Parameters:
+        k (float|np.ndarray): Condutividade térmica.
+        ro (float|np.ndarray): Massa específica.
+        cp (float|np.ndarray): Calor específico.
+    """
+
+    k: float
+    ro: float
+    cp: float
+
+
+@dataclass
 class MatProps:
     """
     Propriedades do material.
 
     Parameters:
-        k (float|np.ndarray): Condutividade térmica;
+        k (float|np.ndarray): Condutividade térmica.
         ro (float|np.ndarray): Massa específica.
         cp (float|np.ndarray): Calor específico.
     """
 
-    k: float | np.ndarray
-    ro: float | np.ndarray
-    cp: float | np.ndarray
+    k: np.ndarray
+    ro: np.ndarray
+    cp: np.ndarray
 
 
 @dataclass
@@ -98,6 +114,8 @@ class Mesh:
         dx (float): Tamanho da célula.
         cells (Cells): Células da malha.
         nodes (Nodes): Nos da malha.
+        lbc (BoundaryCondition): Condição de contorno a esquerda.
+        rbc (BoundaryCondition): Condição de contorno a direita.
     """
 
     length: float
@@ -106,18 +124,30 @@ class Mesh:
     dx: float
     cells: Cells
     nodes: Nodes
+    lbc: BoundaryCondition
+    rbc: BoundaryCondition
 
-    def __init__(self, length: float, n_div: int) -> None:
+    def __init__(
+        self,
+        length: float,
+        n_div: int,
+        lbc: BoundaryCondition,
+        rbc: BoundaryCondition,
+    ) -> None:
         """
         Parameters:
             length: Dimensão do domínio.
             n_div: Número de divisões.
+            lbc: Condição de contorno a esquerda.
+            rbc: Condição de contorno a direita.
         """
 
         self.length = length
         self.n_cells = n_div
         self.n_points = n_div + 1
         self.dx = length / n_div
+        self.lbc = lbc
+        self.rbc = rbc
 
         self.cells = Cells(
             nodes=np.zeros((self.n_cells, 2), dtype=int),
