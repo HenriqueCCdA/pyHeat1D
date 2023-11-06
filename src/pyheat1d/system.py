@@ -23,6 +23,11 @@ class System:
     b: np.ndarray
 
     def __init__(self, neq: int) -> None:
+        """
+        Parameters:
+            neq (int): Numero de equações.
+        """
+
         self.neq = neq
         self.a = np.zeros((self.neq, 3), dtype=float)
         self.b = np.zeros(self.neq, dtype=float)
