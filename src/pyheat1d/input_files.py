@@ -4,7 +4,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from pyheat1d.grid import BoundaryCondition, MatProps
+from pyheat1d.mesh import BoundaryCondition, MatProps
 
 
 class InputFileNotFoundError(Exception):

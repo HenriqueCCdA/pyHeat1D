@@ -3,7 +3,6 @@ from copy import deepcopy
 from pathlib import Path
 
 import pytest
-from pyheat1d.grid import BoundaryCondition, MatProps
 from pyheat1d.input_files import (
     BoundaryConditionMissingKeyError,
     Input,
@@ -13,6 +12,7 @@ from pyheat1d.input_files import (
     load_input_file,
     validated,
 )
+from pyheat1d.mesh import BoundaryCondition, MatProps
 
 INPUT = Input(
     length=50.0,
