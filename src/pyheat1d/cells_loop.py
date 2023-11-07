@@ -8,7 +8,7 @@ def loop_over_cells(
     system: System,
     mesh: Mesh,
     dt: float,
-):
+) -> None:
     """
     Loop sobre todas as celulas.
 
