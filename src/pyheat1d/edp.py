@@ -1,10 +1,12 @@
 from dataclasses import dataclass
+from pathlib import Path
 
 from pyheat1d.cells_loop import loop_over_cells
 from pyheat1d.input_files import Input
 from pyheat1d.mesh import Mesh
 from pyheat1d.solver import Solver
 from pyheat1d.system import System
+from pyheat1d.writer import WriterResults
 
 
 @dataclass
@@ -60,11 +62,20 @@ class Edo:
 
         t, nstep, dt = 0.0, self.temporal_int.nstep, self.temporal_int.dt
 
-        for _ in range(nstep):
-            loop_over_cells(self.solver.system, self.mesh, dt)
+        output = Path("results.json")
 
-            x = self.solver.solver()
+        with WriterResults(output, indent=4) as writer:
+            writer.append_in_buffer(t, self.mesh.cells.results.u)
 
-            self.mesh.cells.results.u = x
+            for _ in range(nstep):
+                loop_over_cells(self.solver.system, self.mesh, dt)
 
-            t += dt
+                x = self.solver.solver()
+
+                self.mesh.cells.results.u = x
+
+                t += dt
+
+                writer.append_in_buffer(t, self.mesh.cells.results.u)
+
+            writer.dump()

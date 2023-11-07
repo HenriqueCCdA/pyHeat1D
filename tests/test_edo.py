@@ -5,7 +5,7 @@ from pyheat1d.mesh import BoundaryCondition, MatPropsRef
 
 
 @pytest.mark.integration
-def test_edo_solver_bc_const_u():
+def test_edo_solver_bc_const_u(tmpdir):
     infos = Input(
         length=1.0,
         ndiv=5,
@@ -27,7 +27,7 @@ def test_edo_solver_bc_const_u():
 
 
 @pytest.mark.integration
-def test_edo_solver_bc_convection():
+def test_edo_solver_bc_convection(tmpdir):
     infos = Input(
         length=1.0,
         ndiv=5,
