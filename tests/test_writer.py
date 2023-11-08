@@ -2,14 +2,14 @@ import json
 
 import numpy as np
 import pytest
-from pyheat1d.writer import MeshWriter, WriterResults
+from pyheat1d.writer import MeshWriter, ResultsResults
 
 
 @pytest.mark.unitary
 def test_writer_results(tmpdir):
     path = tmpdir / "results.json"
 
-    with WriterResults(path, indent=4) as writer:
+    with ResultsResults(path, indent=4) as writer:
         writer.append_in_buffer(0.0, np.array([0.0, 0.0]))
         writer.append_in_buffer(1.0, np.array([1.0, 2.0]))
 
@@ -17,10 +17,10 @@ def test_writer_results(tmpdir):
 
     assert tmpdir.listdir()[0].basename == "results.json"
 
-    results = json.load(path.open())
+    read_results = json.load(path.open())
 
-    assert results[0] == {"t": 0.0, "u": [0.0, 0.0]}
-    assert results[1] == {"t": 1.0, "u": [1.0, 2.0]}
+    assert read_results[0] == {"t": 0.0, "u": [0.0, 0.0]}
+    assert read_results[1] == {"t": 1.0, "u": [1.0, 2.0]}
 
 
 @pytest.mark.unitary
@@ -34,9 +34,9 @@ def test_writer_mesh(tmpdir, mesh):
 
     assert tmpdir.listdir()[0].basename == "mesh.json"
 
-    mesh_read = json.load(path.open())
+    read_mesh = json.load(path.open())
 
-    assert mesh_read["cell_nodes"] == [
+    assert read_mesh["cell_nodes"] == [
         [1, 2],
         [2, 3],
         [3, 4],
@@ -49,7 +49,7 @@ def test_writer_mesh(tmpdir, mesh):
         [10, 11],
     ]
 
-    expected = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+    expected_x = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
-    for e, r in zip(expected, mesh_read["x"]):
+    for e, r in zip(expected_x, read_mesh["x"]):
         assert e == pytest.approx(r)
