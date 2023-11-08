@@ -1,13 +1,13 @@
 import json
 
 import pytest
-from pyheat1d.edp import Edo
+from pyheat1d.edp import Edp
 from pyheat1d.input_files import Input
-from pyheat1d.mesh import BoundaryCondition, MatPropsRef
+from pyheat1d.mesh import BoundaryCondition, MatPropsRef, init_mesh
 
 
 @pytest.mark.integration
-def test_edo_solver_bc_const_u(tmpdir):
+def test_Edp_solver_bc_const_u(tmpdir):
     infos = Input(
         length=1.0,
         ndiv=5,
@@ -19,32 +19,26 @@ def test_edo_solver_bc_const_u(tmpdir):
         prop=MatPropsRef(k=1.0, ro=2.0, cp=3.0),
     )
 
-    edo = Edo(infos=infos, output_dir=tmpdir)
+    mesh = init_mesh(
+        infos.length,
+        infos.ndiv,
+        infos.lbc,
+        infos.rbc,
+        infos.prop,
+        infos.initialt,
+    )
 
-    edo.resolve()
+    edp = Edp(infos=infos, mesh=mesh, output_dir=tmpdir)
+
+    edp.resolve()
 
     excepted = [11.0, 13.0, 15.0, 17.0, 19.0]
-    for u, e in zip(edo.mesh.cells.results.u, excepted):
+    for u, e in zip(edp.mesh.cells.results.u, excepted):
         assert u == pytest.approx(e)
 
-    excepted_dir_files = {f.basename for f in tmpdir.listdir()}
+    dir_files = {f.basename for f in tmpdir.listdir()}
 
-    assert excepted_dir_files == {"results.json", "mesh.json"}
-
-    read_mesh = json.load(tmpdir / "mesh.json")
-
-    assert read_mesh["cell_nodes"] == [
-        [1, 2],
-        [2, 3],
-        [3, 4],
-        [4, 5],
-        [5, 6],
-    ]
-
-    expected_x = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
-
-    for e, r in zip(expected_x, read_mesh["x"]):
-        assert e == pytest.approx(r)
+    assert dir_files == {"results.json"}
 
     read_results = json.load(tmpdir / "results.json")
 
@@ -52,7 +46,7 @@ def test_edo_solver_bc_const_u(tmpdir):
 
 
 @pytest.mark.integration
-def test_edo_solver_bc_convection(tmpdir):
+def test_Edp_solver_bc_convection(tmpdir):
     infos = Input(
         length=1.0,
         ndiv=5,
@@ -64,9 +58,18 @@ def test_edo_solver_bc_convection(tmpdir):
         prop=MatPropsRef(k=2.0, ro=0.5, cp=2.0),
     )
 
-    edo = Edo(infos=infos, output_dir=tmpdir)
+    mesh = init_mesh(
+        infos.length,
+        infos.ndiv,
+        infos.lbc,
+        infos.rbc,
+        infos.prop,
+        infos.initialt,
+    )
 
-    edo.resolve()
+    edp = Edp(infos=infos, mesh=mesh, output_dir=tmpdir)
+
+    edp.resolve()
 
     excepted = [
         13.043478260869598,
@@ -75,27 +78,12 @@ def test_edo_solver_bc_convection(tmpdir):
         14.34782608695656,
         14.78260869565221,
     ]
-    for u, e in zip(edo.mesh.cells.results.u, excepted):
+    for u, e in zip(edp.mesh.cells.results.u, excepted):
         assert u == pytest.approx(e)
 
     excepted_dir_files = {f.basename for f in tmpdir.listdir()}
 
-    assert excepted_dir_files == {"results.json", "mesh.json"}
-
-    read_mesh = json.load(tmpdir / "mesh.json")
-
-    assert read_mesh["cell_nodes"] == [
-        [1, 2],
-        [2, 3],
-        [3, 4],
-        [4, 5],
-        [5, 6],
-    ]
-
-    expected_x = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
-
-    for e, r in zip(expected_x, read_mesh["x"]):
-        assert e == pytest.approx(r)
+    assert excepted_dir_files == {"results.json"}
 
     read_results = json.load(tmpdir / "results.json")
 

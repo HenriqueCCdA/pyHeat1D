@@ -37,6 +37,19 @@ class MatPropsMissingKeyError(Exception):
 
 @dataclass
 class Input:
+    """Infomações no arquivo entrada
+
+    Parameters:
+        length (float): Dimensão do domínio.
+        ndiv (int): Número de divisões.
+        nstep (int): Número de passos.
+        dt (float): Passo de tempo.
+        lbc (BoundaryCondition): Condição de contorno a esquerda.
+        rbc (BoundaryCondition): Condição de contorno a direita.
+        prop (PropRef): Propriedades iniciais.
+        initialt (float): Temperatura inicial
+    """
+
     length: float
     ndiv: int
     dt: float
