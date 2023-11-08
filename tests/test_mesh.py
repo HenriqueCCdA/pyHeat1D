@@ -181,7 +181,7 @@ def test_positeve_matprops_array():
     ],
 )
 def test_update_prop(mesh, value, prop_name):
-    mesh.update_prop(value, prop_name)
+    mesh.update_prop(prop_name, value)
 
     array = getattr(mesh.cells.props, prop_name)
     for i in range(mesh.n_cells):

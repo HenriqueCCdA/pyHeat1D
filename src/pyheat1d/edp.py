@@ -6,7 +6,7 @@ from pyheat1d.input_files import Input
 from pyheat1d.mesh import Mesh
 from pyheat1d.solver import Solver
 from pyheat1d.system import System
-from pyheat1d.writer import MeshWriter, ResultsResults
+from pyheat1d.writer import ResultsResults
 
 
 @dataclass
@@ -23,7 +23,7 @@ class TemporalInt:
     dt: float
 
 
-class Edo:
+class Edp:
     """
     Classe que representa a solução da euqação diferenncial parcial.
 
@@ -39,39 +39,23 @@ class Edo:
     temporal_int: TemporalInt
     output_dir: Path
 
-    def __init__(self, infos: Input, output_dir: Path):
+    def __init__(self, infos: Input, mesh: Mesh, output_dir: Path):
         """
         Parameters:
             infos: Informação da simulação.
+            mesh: Malha.
             output: Diretorio de saida.
         """
 
         self.output_dir = output_dir
-
-        lbc, rbc = infos.lbc, infos.rbc
-        length, n_div = infos.length, infos.ndiv
-
         self.temporal_int = TemporalInt(nstep=infos.nstep, dt=infos.dt)
-        self.mesh = Mesh(length, n_div, lbc, rbc)
-
-        # TODO: a EDO gerar a malha name me parece uma boa modelagem.
-        self.mesh.update_prop(prop_name="k", value=infos.prop.k)
-        self.mesh.update_prop(prop_name="cp", value=infos.prop.cp)
-        self.mesh.update_prop(prop_name="ro", value=infos.prop.ro)
-
-        self.mesh.mk_grid()
-
-        self.mesh.cells.results.u[:] = infos.initialt  # TODO: cria um método
-
+        self.mesh = mesh
         self.solver = Solver(System(self.mesh.n_cells))
 
     def resolve(self) -> None:
         """Loop temporal."""
 
         t, nstep, dt = 0.0, self.temporal_int.nstep, self.temporal_int.dt
-
-        output = self.output_dir / "mesh.json"
-        MeshWriter(output, indent=2).dump(self.mesh.cells.nodes, self.mesh.nodes.x)
 
         output = self.output_dir / "results.json"
 

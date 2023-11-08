@@ -200,8 +200,8 @@ class Mesh:
             "length": self.length,
         }
 
-    def update_prop(self, value: float, prop_name: str) -> None:
-        """_summary_
+    def update_prop(self, prop_name: str, value: float) -> None:
+        """Atualiza a propriedade desejada
 
         Parameters:
             value: Valor da propriedade.
@@ -209,3 +209,30 @@ class Mesh:
         """
         vector = getattr(self.cells.props, prop_name)
         vector[:] = value
+
+
+def init_mesh(length, ndiv, lbc, rbc, prop, initialt) -> Mesh:
+    """Inicializa a malha com as informações lidas
+
+    Parameters:
+        length: Dimensão do domínio.
+        n_div: Número de divisões.
+        lbc: Condição de contorno a esquerda.
+        rbc: Condição de contorno a direita.
+        prop: Propriedades iniciais.
+        initialt: Temperatura inicial.
+
+    Returns:
+        Retorna a malha inicializada
+    """
+
+    mesh = Mesh(length, ndiv, lbc, rbc)
+    mesh.mk_grid()
+
+    mesh.update_prop(prop_name="k", value=prop.k)
+    mesh.update_prop(prop_name="cp", value=prop.cp)
+    mesh.update_prop(prop_name="ro", value=prop.ro)
+
+    mesh.cells.results.u[:] = initialt  # TODO: cria um método
+
+    return mesh
