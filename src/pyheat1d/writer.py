@@ -41,7 +41,7 @@ class WriterBase(ABC):
         self.buffer.clear()
 
 
-class WriterResults(WriterBase):
+class ResultsResults(WriterBase):
     def append_in_buffer(self, t: float, u: np.ndarray) -> None:  # type: ignore
         """
         Guarda os resultados no buffer em memória.

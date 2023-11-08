@@ -1,0 +1,25 @@
+{
+    "length": 50.0,
+    "ndiv": 100,
+    "dt": 5.0,
+    "nstep": 1000,
+    "lbc": {
+        "type": 1,
+        "params": {
+            "value": 10.0
+        }
+    },
+    "rbc": {
+        "type": 3,
+        "params": {
+            "value": 30.0,
+            "h": 1.0
+        }
+    },
+    "initialt": 20.0,
+    "prop": {
+        "k": 1.0,
+        "ro": 2.0,
+        "cp": 3.0
+    }
+}
