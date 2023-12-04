@@ -6,19 +6,13 @@ import numpy as np
 
 
 class WriterBase(ABC):
-    """
-    Gerenciador de context usado para escrever os resultados.
-
-    Parameters:
-        path (Path): Caminho do arquivo.
-        intent (None | int): Indentação do json
-    """
+    """Gerenciador de context usado para escrever os resultados."""
 
     def __init__(self, path: Path, indent: int | None = None) -> None:
         """
         Parameters:
             path (Path): Caminho do arquivo.
-            intentdt (None | int): Indentação do json
+            indent (None | int): Indentação do json
         """
         self.buffer: list[dict] = []
         self.indent = indent
@@ -59,7 +53,7 @@ class MeshWriter:
         """
         Parameters:
             path (Path): Caminho do arquivo.
-            intentdt (None | int): Indentação do json
+            indent (None | int): Indentação do json
         """
         self.buffer: list[dict] = []
         self.indent = indent
