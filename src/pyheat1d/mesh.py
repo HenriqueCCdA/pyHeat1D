@@ -222,7 +222,14 @@ class Mesh:
 
 
 # TODO: Addicionar tipagem
-def init_mesh(length, ndiv, lbc, rbc, prop, initialt) -> Mesh:
+def init_mesh(
+    length: float,
+    n_div: int,
+    lbc: BoundaryCondition,
+    rbc: BoundaryCondition,
+    prop: MatPropsRef,
+    initialt: float | np.ndarray,
+) -> Mesh:
     """Inicializa a malha com as informações lidas
 
     Parameters:
@@ -237,7 +244,7 @@ def init_mesh(length, ndiv, lbc, rbc, prop, initialt) -> Mesh:
         Retorna a malha inicializada
     """
 
-    mesh = Mesh(length, ndiv, lbc, rbc)
+    mesh = Mesh(length, n_div, lbc, rbc)
     mesh.mk_grid()
 
     mesh.update_prop(prop_name="k", value=prop.k)
