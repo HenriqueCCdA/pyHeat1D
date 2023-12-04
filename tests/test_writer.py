@@ -30,7 +30,7 @@ def test_writer_mesh(tmpdir, mesh):
     mesh.mk_grid()
 
     writer = MeshWriter(path, indent=4)
-    writer.dump(mesh.cells.nodes, mesh.nodes.x)
+    writer.dump(mesh.cells.nodes, mesh.cells.centroids, mesh.nodes.x)
 
     assert tmpdir.listdir()[0].basename == "mesh.json"
 
@@ -52,4 +52,9 @@ def test_writer_mesh(tmpdir, mesh):
     expected_x = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
     for e, r in zip(expected_x, read_mesh["x"]):
+        assert e == pytest.approx(r)
+
+    expected_x = [0.05, 0.15, 0.25, 0.35, 0.45, 0.55, 0.65, 0.75, 0.85, 0.95]
+
+    for e, r in zip(expected_x, read_mesh["xp"]):
         assert e == pytest.approx(r)

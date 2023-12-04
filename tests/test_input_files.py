@@ -37,12 +37,12 @@ DICT_INPUT = {
 }
 
 BASE_DIR = os.getcwd()
-OUTPUT_FILE = Path(BASE_DIR + "/tests/files/newton.json")
+INPUT_FILE = Path(BASE_DIR + "/tests/files/input/newton.json")
 
 
 @pytest.mark.unitary
 def test_positive_read_json():
-    infos = load_input_file(OUTPUT_FILE)
+    infos = load_input_file(INPUT_FILE)
 
     assert infos == INPUT
 

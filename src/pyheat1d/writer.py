@@ -59,14 +59,15 @@ class MeshWriter:
         self.indent = indent
         self.path = path
 
-    def dump(self, cell_nodes: np.ndarray, x: np.ndarray) -> None:
+    def dump(self, cell_nodes: np.ndarray, centroid: np.ndarray, x: np.ndarray) -> None:
         """
         Escreve a malha em arquivo json.
 
         Parameters:
-            cell_nodes: conetiviade nodal
+            cell_nodes: Conetiviade nodal
+            centroid: Centroide da celula
             x: Coordenadas nodais
         """
         with open(self.path, mode="w", encoding="utf8") as fp:
-            dict_ = {"cell_nodes": cell_nodes.tolist(), "x": x.tolist()}
+            dict_ = {"cell_nodes": cell_nodes.tolist(), "x": x.tolist(), "xp": centroid.tolist()}
             json.dump(dict_, fp, indent=self.indent)
