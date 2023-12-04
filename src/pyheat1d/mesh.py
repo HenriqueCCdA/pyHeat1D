@@ -210,7 +210,18 @@ class Mesh:
         vector = getattr(self.cells.props, prop_name)
         vector[:] = value
 
+    def update_cells_results(self, prop_name: str, value: float | np.ndarray) -> None:
+        """Atualiza o resultado das células
 
+        Parameters:
+            value: Valor da célula
+            prop_name: Nome do resultado.
+        """
+        vector = getattr(self.cells.results, prop_name)
+        vector[:] = value
+
+
+# TODO: Addicionar tipagem
 def init_mesh(length, ndiv, lbc, rbc, prop, initialt) -> Mesh:
     """Inicializa a malha com as informações lidas
 
@@ -233,6 +244,6 @@ def init_mesh(length, ndiv, lbc, rbc, prop, initialt) -> Mesh:
     mesh.update_prop(prop_name="cp", value=prop.cp)
     mesh.update_prop(prop_name="ro", value=prop.ro)
 
-    mesh.cells.results.u[:] = initialt  # TODO: cria um método
+    mesh.update_cells_results(prop_name="u", value=initialt)
 
     return mesh

@@ -186,3 +186,19 @@ def test_update_prop(mesh, value, prop_name):
     array = getattr(mesh.cells.props, prop_name)
     for i in range(mesh.n_cells):
         assert array[i] == value
+
+
+def test_update_results_cells_by_const_value(mesh):
+    mesh.update_cells_results("u", 10.0)
+
+    for i in range(mesh.n_cells):
+        assert mesh.cells.results.u[i] == 10.0
+
+
+def test_update_results_cells_by_arary_values(mesh):
+    new_u = np.array(range(mesh.n_cells))
+
+    mesh.update_cells_results("u", new_u)
+
+    for i in range(mesh.n_cells):
+        assert mesh.cells.results.u[i] == new_u[i]
