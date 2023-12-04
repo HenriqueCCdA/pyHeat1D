@@ -7,6 +7,8 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from pyheat1d.singleton import Singleton
+
 
 @dataclass
 class BoundaryCondition:
@@ -103,7 +105,7 @@ class Cells:
     results: ResultFields
 
 
-class Mesh:
+class Mesh(metaclass=Singleton):
     """
     Classe que representa a malha.
 

@@ -3,6 +3,16 @@ import pytest
 from pyheat1d.mesh import BoundaryCondition, MatProps, Mesh
 
 
+def test_mesh_must_be_a_single_instance():
+    lbc = BoundaryCondition(type=1, params={"value": 10.0})
+    rbc = BoundaryCondition(type=3, params={"value": 30.0, "h": 1.0})
+
+    m1 = Mesh(1.0, 10, lbc, rbc)
+    m2 = Mesh(1.0, 10, lbc, rbc)
+
+    assert id(m1) == id(m2)
+
+
 @pytest.mark.unitary
 def test_init(mesh):
     # cells
@@ -104,7 +114,7 @@ def test_centroid(mesh):
 
 
 @pytest.mark.unitary
-def test_grid(mesh):
+def test_grid():
     mesh = Mesh(
         1.0,
         2,
