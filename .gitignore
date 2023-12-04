@@ -160,5 +160,5 @@ cython_debug/
 .idea/
 .vscode/
 
-results.json
-mesh.json
+
+simulations

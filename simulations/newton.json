@@ -1,8 +1,8 @@
 {
     "length": 50.0,
-    "ndiv": 100,
+    "ndiv": 10,
     "dt": 5.0,
-    "nstep": 1000,
+    "nstep": 10,
     "lbc": {
         "type": 1,
         "params": {
