@@ -1,12 +1,19 @@
+"""Módulo com os erros"""
+
+
 class Pyheat1ErrorsBase(Exception):
     errno: int | None = None
 
 
 class InputFileNotFoundError(Pyheat1ErrorsBase):
+    """Arquivo de enrada não achado."""
+
     errno = 2
 
 
 class MissingInputInfoError(Pyheat1ErrorsBase):
+    """Chave de configuração faltando."""
+
     errno = 3
 
     def __init__(self, key: str):
@@ -15,6 +22,8 @@ class MissingInputInfoError(Pyheat1ErrorsBase):
 
 
 class BoundaryConditionMissingKeyError(Pyheat1ErrorsBase):
+    """Chave da condição de contorno faltando."""
+
     errno = 4
 
     def __init__(self, key: str, bc: str):
@@ -23,6 +32,8 @@ class BoundaryConditionMissingKeyError(Pyheat1ErrorsBase):
 
 
 class MatPropsMissingKeyError(Pyheat1ErrorsBase):
+    """Chave da propriedade do material faltando."""
+
     errno = 5
 
     def __init__(self, key: str):
@@ -31,6 +42,8 @@ class MatPropsMissingKeyError(Pyheat1ErrorsBase):
 
 
 class FileMeshNotFoundError(Pyheat1ErrorsBase):
+    """Arquivo com a malha não foi achado."""
+
     errno = 6
 
     def __init__(self):
@@ -39,6 +52,8 @@ class FileMeshNotFoundError(Pyheat1ErrorsBase):
 
 
 class FileResultshNotFoundError(Pyheat1ErrorsBase):
+    """Arquivo com os resultado foi achado."""
+
     errno = 7
 
     def __init__(self):
