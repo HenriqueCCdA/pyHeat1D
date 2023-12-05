@@ -8,7 +8,7 @@ from click import Context
 from rich.console import Console
 
 from pyheat1d.edp import Edp
-from pyheat1d.errors import Pyheat1ErrorsBase
+from pyheat1d.errors import FileMeshNotFoundError, FileResultshNotFoundError
 from pyheat1d.input_files import load_input_file
 from pyheat1d.mesh import init_mesh
 from pyheat1d.writer import MeshWriter
@@ -16,22 +16,6 @@ from pyheat1d.writer import MeshWriter
 console = Console()
 
 app = typer.Typer(add_completion=False, pretty_exceptions_show_locals=False)
-
-
-class FileMeshNotFound(Pyheat1ErrorsBase):
-    errno = 6
-
-    def __init__(self):
-        msg = "Arquivo 'mesh.json' não achado."
-        super().__init__(msg)
-
-
-class FileResultshNotFound(Pyheat1ErrorsBase):
-    errno = 7
-
-    def __init__(self):
-        msg = "Arquivo 'results.json' não achado."
-        super().__init__(msg)
 
 
 def version_callback(value: bool):
@@ -93,10 +77,10 @@ def plot(
         file_results = output_dir / "results.json"
 
         if not file_mesh.exists():
-            raise FileMeshNotFound()
+            raise FileMeshNotFoundError()
 
         if not file_results.exists():
-            raise FileResultshNotFound()
+            raise FileResultshNotFoundError()
 
         mesh = json.load(file_mesh.open())
         results = json.load(file_results.open())
@@ -117,6 +101,6 @@ def plot(
         plt.legend()
         plt.grid()
         plt.show()
-    except (FileMeshNotFound, FileResultshNotFound) as e:
+    except (FileMeshNotFoundError, FileResultshNotFoundError) as e:
         console.print(f"[red]Error[/red]: {e}")
         raise typer.Exit(1) from e
