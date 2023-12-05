@@ -4,35 +4,13 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
+from pyheat1d.errors import (
+    BoundaryConditionMissingKeyError,
+    InputFileNotFoundError,
+    MatPropsMissingKeyError,
+    MissingInputInfoError,
+)
 from pyheat1d.mesh import BoundaryCondition, MatProps, MatPropsRef
-
-
-class InputFileNotFoundError(Exception):
-    errno = 2
-
-
-class MissingInputInfoError(Exception):
-    errno = 3
-
-    def __init__(self, key: str):
-        msg = f"O valor '{key}' é necessário no arquivo de entrada."
-        super().__init__(msg)
-
-
-class BoundaryConditionMissingKeyError(Exception):
-    errno = 4
-
-    def __init__(self, key: str, bc: str):
-        msg = f"O valor '{key}' é necessário na condição de contorno '{bc}'."
-        super().__init__(msg)
-
-
-class MatPropsMissingKeyError(Exception):
-    errno = 5
-
-    def __init__(self, key: str):
-        msg = f"O valor '{key}' é necessário na propriedade do material."
-        super().__init__(msg)
 
 
 @dataclass
