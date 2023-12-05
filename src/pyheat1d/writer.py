@@ -4,6 +4,8 @@ from pathlib import Path
 
 import numpy as np
 
+from pyheat1d.jsonencoder import JSONEncoderNumpy
+
 
 class WriterBase(ABC):
     """Gerenciador de context usado para escrever os resultados."""
@@ -31,7 +33,7 @@ class WriterBase(ABC):
 
     def dump(self) -> None:
         """Tranfere os resultados do buffer para a memória para o arquivo."""
-        json.dump(self.buffer, self.fp, indent=self.indent)
+        json.dump(self.buffer, self.fp, cls=JSONEncoderNumpy, indent=self.indent)
         self.buffer.clear()
 
 
@@ -44,7 +46,7 @@ class ResultsResults(WriterBase):
             t: tempo
             u: valor do campo
         """
-        dict_ = {"t": t, "u": u.tolist()}
+        dict_ = {"t": t, "u": u}
         self.buffer.append(dict_)
 
 
@@ -69,5 +71,5 @@ class MeshWriter:
             x: Coordenadas nodais
         """
         with open(self.path, mode="w", encoding="utf8") as fp:
-            dict_ = {"cell_nodes": cell_nodes.tolist(), "x": x.tolist(), "xp": centroid.tolist()}
-            json.dump(dict_, fp, indent=self.indent)
+            dict_ = {"cell_nodes": cell_nodes, "x": x.tolist(), "xp": centroid}
+            json.dump(dict_, fp, cls=JSONEncoderNumpy, indent=self.indent)
