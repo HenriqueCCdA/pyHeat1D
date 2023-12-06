@@ -3,6 +3,7 @@ import json
 import re
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional
 
 from pyheat1d.errors import (
     BoundaryConditionMissingKeyError,
@@ -36,6 +37,7 @@ class Input:
     rbc: BoundaryCondition
     initialt: float
     prop: MatPropsRef
+    write_every_steps: Optional[int] = None
 
 
 def load_input_file(path: Path) -> Input:
