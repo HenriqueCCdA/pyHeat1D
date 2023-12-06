@@ -3,6 +3,7 @@
     "ndiv": 100,
     "dt": 5.0,
     "nstep": 1000,
+    "write_every_steps": 10,
     "lbc": {
         "type": 1,
         "params": {

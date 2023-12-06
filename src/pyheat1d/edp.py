@@ -6,7 +6,7 @@ from pyheat1d.input_files import Input
 from pyheat1d.mesh import Mesh
 from pyheat1d.solver import Solver
 from pyheat1d.system import System
-from pyheat1d.writer import ResultsResults
+from pyheat1d.writer import results_writer_strategy
 
 
 @dataclass
@@ -51,6 +51,7 @@ class Edp:
         self.temporal_int = TemporalInt(nstep=infos.nstep, dt=infos.dt)
         self.mesh = mesh
         self.solver = Solver(System(self.mesh.n_cells))
+        self.write_every_steps = infos.write_every_steps
 
     def resolve(self) -> None:
         """Loop temporal."""
@@ -59,10 +60,11 @@ class Edp:
 
         output = self.output_dir / "results.json"
 
-        with ResultsResults(output, indent=4) as writer:
-            writer.append_in_buffer(t, self.mesh.cells.results.u)
+        ResultsWriter = results_writer_strategy(output, indent=4, write_every_steps=self.write_every_steps)
 
-            for _ in range(nstep):
+        with ResultsWriter as writer:
+            writer.append_in_buffer(0, t, self.mesh.cells.results.u)
+            for step in range(1, nstep + 1):
                 loop_over_cells(self.solver.system, self.mesh, dt)
 
                 x = self.solver.solver()
@@ -71,6 +73,6 @@ class Edp:
 
                 t += dt
 
-                writer.append_in_buffer(t, self.mesh.cells.results.u)
+                writer.append_in_buffer(step, t, self.mesh.cells.results.u)
 
             writer.dump()
