@@ -62,6 +62,8 @@ exclude = [
     ".venv"
 ]
 
+src = ["src", "test"]
+
 [tool.pytest.ini_options]
 addopts = "-ra -vv"
 testpaths = [

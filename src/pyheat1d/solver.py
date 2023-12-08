@@ -4,6 +4,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from pyheat1d.simulation_times import register_timer
 from pyheat1d.system import System
 
 
@@ -18,6 +19,7 @@ class Solver:
 
     system: System
 
+    @register_timer("solver")
     def solver(self) -> np.ndarray:
         """
         Resolução de sistemas tridiagonais pelo método `TDMA` [[ref]](https://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm).

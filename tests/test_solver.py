@@ -1,4 +1,5 @@
 import pytest
+
 from pyheat1d.solver import Solver
 from pyheat1d.system import System
 

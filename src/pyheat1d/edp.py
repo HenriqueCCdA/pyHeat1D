@@ -4,6 +4,7 @@ from pathlib import Path
 from pyheat1d.cells_loop import loop_over_cells
 from pyheat1d.input_files import Input
 from pyheat1d.mesh import Mesh
+from pyheat1d.simulation_times import register_timer
 from pyheat1d.solver import Solver
 from pyheat1d.system import System
 from pyheat1d.writer import results_writer_strategy
@@ -53,6 +54,7 @@ class Edp:
         self.solver = Solver(System(self.mesh.n_cells))
         self.write_every_steps = infos.write_every_steps
 
+    @register_timer("edp")
     def resolve(self) -> None:
         """Loop temporal."""
 

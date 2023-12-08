@@ -1,6 +1,7 @@
 import json
 
 import pytest
+
 from pyheat1d.edp import Edp
 from pyheat1d.input_files import Input
 from pyheat1d.mesh import BoundaryCondition, MatPropsRef, init_mesh
