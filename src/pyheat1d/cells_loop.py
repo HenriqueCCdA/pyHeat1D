@@ -1,9 +1,11 @@
 import numpy as np
 
 from pyheat1d.mesh import BoundaryCondition, Mesh
+from pyheat1d.simulation_times import register_timer
 from pyheat1d.system import System
 
 
+@register_timer("cell_loop")
 def loop_over_cells(
     system: System,
     mesh: Mesh,

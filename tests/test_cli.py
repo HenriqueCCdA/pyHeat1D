@@ -2,8 +2,9 @@ import shutil
 from pathlib import Path
 
 import pytest
-from pyheat1d.cli import app
 from typer.testing import CliRunner
+
+from pyheat1d.cli import app
 
 runner = CliRunner()
 

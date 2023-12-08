@@ -11,6 +11,7 @@ from pyheat1d.edp import Edp
 from pyheat1d.errors import FileMeshNotFoundError, FileResultshNotFoundError
 from pyheat1d.input_files import load_input_file
 from pyheat1d.mesh import init_mesh
+from pyheat1d.simulation_times import run_times
 from pyheat1d.writer import MeshWriter
 
 console = Console()
@@ -63,6 +64,10 @@ def run(input_file: Annotated[Path, typer.Argument(..., help="Caminho do arquivo
     edp = Edp(input_data, mesh, base_dir_path)
 
     edp.resolve()
+
+    console.print(f"Edp: {run_times.edp:.3}")
+    console.print(f"Cell loop: {run_times.cell_loop:.3}")
+    console.print(f"Solver: {run_times.solver:.3}")
 
 
 @app.command()

@@ -3,6 +3,7 @@ from copy import deepcopy
 from pathlib import Path
 
 import pytest
+
 from pyheat1d.input_files import (
     BoundaryConditionMissingKeyError,
     Input,

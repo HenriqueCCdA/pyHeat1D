@@ -1,4 +1,5 @@
 import pytest
+
 from pyheat1d.mesh import BoundaryCondition, Mesh
 from pyheat1d.singleton import Singleton
 

@@ -1,5 +1,6 @@
 import numpy as np
 import pytest
+
 from pyheat1d.mesh import BoundaryCondition, MatProps, Mesh
 
 
