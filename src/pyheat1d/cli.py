@@ -7,12 +7,9 @@ import typer
 from click import Context
 from rich.console import Console
 
-from pyheat1d.edp import Edp
+from pyheat1d.controllers import run as run_controller
 from pyheat1d.errors import FileMeshNotFoundError, FileResultshNotFoundError
-from pyheat1d.input_files import load_input_file
-from pyheat1d.mesh import init_mesh
 from pyheat1d.simulation_times import run_times
-from pyheat1d.writer import MeshWriter
 
 console = Console()
 
@@ -44,27 +41,8 @@ def typer_callback(
 @app.command()
 def run(input_file: Annotated[Path, typer.Argument(..., help="Caminho do arquivos de entra.")]):
     """Rodando a analise."""
-    input_file_path = input_file.absolute()
-    base_dir_path = input_file_path.parent
 
-    input_data = load_input_file(input_file_path)
-
-    mesh = init_mesh(
-        input_data.length,
-        input_data.ndiv,
-        input_data.lbc,
-        input_data.rbc,
-        input_data.prop,
-        input_data.initialt,
-    )
-
-    output = base_dir_path / "mesh.json"
-    MeshWriter(output, indent=2).dump(mesh.cells.nodes, mesh.cells.centroids, mesh.nodes.x)
-
-    edp = Edp(input_data, mesh, base_dir_path)
-
-    edp.resolve()
-
+    run_controller(input_file=input_file)
     console.print(f"Edp: {run_times.edp:.3}")
     console.print(f"Cell loop: {run_times.cell_loop:.3}")
     console.print(f"Solver: {run_times.solver:.3}")
