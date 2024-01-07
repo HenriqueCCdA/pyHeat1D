@@ -48,7 +48,7 @@ class ResultsWriterEveryTime(WriterBase):
             u: valor do campo
         """
 
-        dict_ = {"istep": istep, "t": t, "u": u}
+        dict_ = {"istep": istep, "t": t, "u": u.copy()}
         self.buffer.append(dict_)
 
 
@@ -85,7 +85,7 @@ class ResultsWriterEveryNSteps(WriterBase):
         self.writer_count += 1
 
     def _append_in_buffer(self, istep: int, t: float, u: np.ndarray) -> None:
-        dict_ = {"istep": istep, "t": t, "u": u}
+        dict_ = {"istep": istep, "t": t, "u": u.copy()}
         self.buffer.append(dict_)
 
 
