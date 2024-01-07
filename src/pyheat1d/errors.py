@@ -59,3 +59,11 @@ class FileResultshNotFoundError(Pyheat1ErrorsBase):
     def __init__(self):
         msg = "Arquivo 'results.json' não achado."
         super().__init__(msg)
+
+
+class TimeLogWriteFileError(Pyheat1ErrorsBase):
+    errno = 8
+
+    def __init__(self, file: str):
+        msg = f"O arquivo '{file}' não pode ser escrito."
+        super().__init__(msg)
