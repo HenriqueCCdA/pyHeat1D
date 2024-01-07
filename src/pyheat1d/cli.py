@@ -43,9 +43,7 @@ def run(input_file: Annotated[Path, typer.Argument(..., help="Caminho do arquivo
     """Rodando a analise."""
 
     run_controller(input_file=input_file)
-    console.print(f"Edp: {run_times.edp:.3}")
-    console.print(f"Cell loop: {run_times.cell_loop:.3}")
-    console.print(f"Solver: {run_times.solver:.3}")
+    run_times.print_stdout_simulation_times()
 
 
 @app.command()

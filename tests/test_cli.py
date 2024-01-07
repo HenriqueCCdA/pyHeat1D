@@ -38,7 +38,7 @@ def test_run(tmpdir):
 
     excepted_dir_files = {f.basename for f in tmpdir.listdir()}
 
-    assert excepted_dir_files == {"results.json", "mesh.json", "newton.json"}
+    assert excepted_dir_files == {"results.json", "mesh.json", "newton.json", "time_log.json"}
 
 
 @pytest.mark.cli
