@@ -96,6 +96,14 @@ def test_Edp_solver_bc_const_u_write_every_3_steps(tmpdir):
     assert read_results[2]["istep"] == 6
     assert read_results[2]["t"] == 6.0
 
+    excepted = [15.0, 15.0, 15.0, 15.0, 15.0]
+    for e, r in zip(excepted, read_results[0]["u"]):
+        assert e == r
+
+    excepted = [11.0, 13.0, 15.0, 17.0, 19.0]
+    for e, r in zip(excepted, read_results[33]["u"]):
+        assert e == pytest.approx(r)
+
 
 @pytest.mark.integration
 def test_Edp_solver_bc_convection(tmpdir):

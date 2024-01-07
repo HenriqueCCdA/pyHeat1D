@@ -71,7 +71,7 @@ class Edp:
 
                 x = self.solver.solver()
 
-                self.mesh.cells.results.u = x
+                self.mesh.update_cells_results("u", x)
 
                 t += dt
 
